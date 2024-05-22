@@ -37,13 +37,13 @@
           <a href="{% url 'todo:tag-delete' pk=tag.pk %}"
                class="btn btn-purple">Delete
           </a>
-        {% else %}  
+        {% else %}
         {% endif %}
         </td>
       {% endfor %}
       </tbody>
     </table>
   {% else %}
-    No comments yet.
+    No tags yet.
   {% endif %}
 {% endblock %}
