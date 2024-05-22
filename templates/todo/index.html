@@ -17,14 +17,14 @@
       {% for task in task_list %}
         <li class="purple-table-border purple-table-head"
             style="border-radius: 6px">
-          <p>Content: {{ task.content }}</p>
-          <p>Created at: {{ task.created_at }}</p>
-          <p>Deadline: {{ task.dead_line_time }}</p>
+          <p><strong>Content: </strong>{{ task.content }}</p>
+          <p><strong>Created at: </strong>{{ task.created_at }}</p>
+          <p><strong>Deadline: </strong>{{ task.dead_line_time }}</p>
           <p>
-            Status done: {{ task.is_done }}
+            <strong>Status done: </strong>{{ task.is_done }}
             {% include "includes/task_status_change.html" %}
           </p>
-          <p>Tags:
+          <p><strong>Tags: </strong>
             {% for tag in task.tags.all %}{{ tag.name }},{% endfor %}</p>
           <a href="{% url 'todo:task-delete' pk=task.pk %}"
              class="btn btn-danger link-to-page">
