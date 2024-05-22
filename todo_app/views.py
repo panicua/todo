@@ -1,3 +1,5 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
@@ -14,16 +16,6 @@ def index(request):
         Task.objects.prefetch_related("tags").order_by("is_done")
     )
 
-    # paginator = Paginator(tasks, 5)
-    # page_number = request.GET.get("page")
-    #
-    # try:
-    #     posts = paginator.page(page_number)
-    # except PageNotAnInteger:
-    #     posts = paginator.page(1)
-    # except EmptyPage:
-    #     posts = paginator.page(paginator.num_pages)
-
     context = {
         "task_list": tasks,
     }
@@ -35,60 +27,48 @@ class TagListView(generic.ListView):
     paginate_by = 5
     template_name = "todo/tag_list.html"
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super(TagListView, self).get_context_data(**kwargs)
-        # name = self.request.GET.get("name", "")
-        # context["search_form"] = TagSearchForm(initial={"name": name})
-        return context
 
-    # def get_queryset(self):
-    #     form = TagSearchForm(self.request.GET)
-    #     queryset = Tag.objects.all()
-    #     if form.is_valid():
-    #         return queryset.filter(name__icontains=form.cleaned_data["name"])
-    #     return queryset
-
-
-class TagCreateView(generic.CreateView):
+class TagCreateView(LoginRequiredMixin, generic.CreateView):
     model = Tag
     form_class = TagForm
     template_name = "todo/tag_form.html"
     success_url = reverse_lazy("todo:tag-list")
 
 
-class TagUpdateView(generic.UpdateView):
+class TagUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Tag
     form_class = TagForm
     template_name = "todo/tag_form.html"
     success_url = reverse_lazy("todo:tag-list")
 
 
-class TagDeleteView(generic.DeleteView):
+class TagDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Tag
     template_name = "todo/tag_confirm_delete.html"
     success_url = reverse_lazy("todo:tag-list")
 
 
-class TaskCreateView(generic.CreateView):
+class TaskCreateView(LoginRequiredMixin, generic.CreateView):
     model = Task
     form_class = TaskForm
     template_name = "todo/task_form.html"
     success_url = reverse_lazy("todo:index")
 
 
-class TaskDeleteView(generic.DeleteView):
+class TaskDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Task
     template_name = "todo/task_confirm_delete.html"
     success_url = reverse_lazy("todo:index")
 
 
-class TaskUpdateView(generic.UpdateView):
+class TaskUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Task
     form_class = TaskForm
     template_name = "todo/task_form.html"
     success_url = reverse_lazy("todo:index")
 
 
+@login_required
 def change_task_status(request, pk):
     task = Task.objects.get(pk=pk)
     if task.is_done:
