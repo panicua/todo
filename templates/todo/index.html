@@ -5,15 +5,18 @@
 {#{% endblock %}#}
 
 {% block content %}
-  <a href="{% url 'todo:task-create' %}" class="btn btn-primary link-to-page">
+  <h2>Task List<a href="{% url 'todo:task-create' %}"
+                  class="btn btn-primary link-to-page" style="margin-left:20px">
     Create Task
-  </a>
+  </a></h2>
+
 
   {#  <h4>Page number: {{ post_list.number }}</h4>#}
   {% if task_list %}
     <ul>
       {% for task in task_list %}
-        <li style="border: solid; border-radius: 8px">
+        <li class="purple-table-border purple-table-head"
+            style="border-radius: 6px">
           <p>Content: {{ task.content }}</p>
           <p>Created at: {{ task.created_at }}</p>
           <p>Deadline: {{ task.dead_line_time }}</p>
@@ -21,7 +24,8 @@
             Status done: {{ task.is_done }}
             {% include "includes/task_status_change.html" %}
           </p>
-          <p>Tags: {% for tag in task.tags.all %}{{ tag.name }},{% endfor %}</p>
+          <p>Tags:
+            {% for tag in task.tags.all %}{{ tag.name }},{% endfor %}</p>
           <a href="{% url 'todo:task-delete' pk=task.pk %}"
              class="btn btn-danger link-to-page">
             Delete
