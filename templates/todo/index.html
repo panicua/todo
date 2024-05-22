@@ -17,17 +17,19 @@
           <p>Content: {{ task.content }}</p>
           <p>Created at: {{ task.created_at }}</p>
           <p>Deadline: {{ task.dead_line_time }}</p>
-          <p>Status done: {{ task.is_done }}</p>
+          <p>
+            Status done: {{ task.is_done }}
+            {% include "includes/task_status_change.html" %}
+          </p>
           <p>Tags: {% for tag in task.tags.all %}{{ tag.name }},{% endfor %}</p>
           <a href="{% url 'todo:task-delete' pk=task.pk %}"
-             class="btn btn-primary link-to-page">
+             class="btn btn-danger link-to-page">
             Delete
           </a>
-{#          <a href="{% url 'todo:task-update' %}"#}
-{#             class="btn btn-primary link-to-page">#}
-{#            Update#}
-{#          </a>#}
-
+          <a href="{% url 'todo:task-update' pk=task.pk %}"
+             class="btn btn-primary link-to-page">
+            Update
+          </a>
         </li>
         <br>
       {% endfor %}
