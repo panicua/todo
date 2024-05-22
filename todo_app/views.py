@@ -1,4 +1,5 @@
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
@@ -74,3 +75,12 @@ class TaskUpdateView(generic.UpdateView):
     template_name = "todo/task_form.html"
     success_url = reverse_lazy("todo:index")
 
+
+def change_task_status(request, pk):
+    task = Task.objects.get(pk=pk)
+    if task.is_done:
+        task.is_done = False
+    else:
+        task.is_done = True
+    task.save()
+    return HttpResponseRedirect(reverse_lazy("todo:index"))
