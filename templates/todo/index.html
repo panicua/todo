@@ -13,20 +13,20 @@
   {% if task_list %}
     <ul>
       {% for task in task_list %}
-        <li>
+        <li style="border: solid; border-radius: 8px">
           <p>Content: {{ task.content }}</p>
           <p>Created at: {{ task.created_at }}</p>
           <p>Deadline: {{ task.dead_line_time }}</p>
           <p>Status done: {{ task.is_done }}</p>
-          <p>Tags: {% for tag in task.tags %}{{ tag }},{% endfor %}</p>
-          <a href="{% url 'todo:task-delete' %}"
-             class="btn btn-primary link-to-page">
-            Delete
-          </a>
-          <a href="{% url 'todo:task-update' %}"
-             class="btn btn-primary link-to-page">
-            Update
-          </a>
+          <p>Tags: {% for tag in task.tags.all %}{{ tag.name }},{% endfor %}</p>
+{#          <a href="{% url 'todo:task-delete' %}"#}
+{#             class="btn btn-primary link-to-page">#}
+{#            Delete#}
+{#          </a>#}
+{#          <a href="{% url 'todo:task-update' %}"#}
+{#             class="btn btn-primary link-to-page">#}
+{#            Update#}
+{#          </a>#}
 
         </li>
         <br>
