@@ -11,7 +11,7 @@ from todo_app.models import Tag, Task
 def index(request):
     """View function for the home page of the site."""
     tasks = (
-        Task.objects.prefetch_related("tags").order_by("-is_done")
+        Task.objects.prefetch_related("tags").order_by("is_done")
     )
 
     # paginator = Paginator(tasks, 5)
