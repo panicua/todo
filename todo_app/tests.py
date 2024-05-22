@@ -1,10 +1,10 @@
 from django.contrib.auth import get_user_model
-from django.test import TestCase, Client
-
+from django.test import Client
 from django.test import TestCase
 from django.urls import reverse
-from todo_app.models import Task, Tag
 from django.utils import timezone
+
+from todo_app.models import Task, Tag
 
 
 class IndexViewTests(TestCase):
@@ -66,7 +66,9 @@ class TagCreateViewTests(TestCase):
         self.assertTemplateUsed(response, "todo/tag_form.html")
 
     def test_can_create_tag(self):
-        response = self.client.post(reverse("todo:tag-create"), data={"name": "New Tag"})
+        response = self.client.post(
+            reverse("todo:tag-create"), data={"name": "New Tag"}
+        )
         self.assertEqual(response.status_code, 302)
         self.assertTrue(Tag.objects.filter(name="New Tag").exists())
 
@@ -83,15 +85,22 @@ class TagUpdateViewTests(TestCase):
         self.tag = Tag.objects.create(name="Tag 1")
 
     def test_tag_update_view_status_code(self):
-        response = self.client.get(reverse("todo:tag-update", args=[self.tag.id]))
+        response = self.client.get(
+            reverse("todo:tag-update", args=[self.tag.id])
+        )
         self.assertEqual(response.status_code, 200)
 
     def test_tag_update_view_uses_correct_template(self):
-        response = self.client.get(reverse("todo:tag-update", args=[self.tag.id]))
+        response = self.client.get(
+            reverse("todo:tag-update", args=[self.tag.id])
+        )
         self.assertTemplateUsed(response, "todo/tag_form.html")
 
     def test_can_update_tag(self):
-        response = self.client.post(reverse("todo:tag-update", args=[self.tag.id]), data={"name": "Updated Tag"})
+        response = self.client.post(
+            reverse("todo:tag-update", args=[self.tag.id]),
+            data={"name": "Updated Tag"},
+        )
         self.assertEqual(response.status_code, 302)
         self.tag.refresh_from_db()
         self.assertEqual(self.tag.name, "Updated Tag")
@@ -109,15 +118,21 @@ class TagDeleteViewTests(TestCase):
         self.tag = Tag.objects.create(name="Tag 1")
 
     def test_tag_delete_view_status_code(self):
-        response = self.client.get(reverse("todo:tag-delete", args=[self.tag.id]))
+        response = self.client.get(
+            reverse("todo:tag-delete", args=[self.tag.id])
+        )
         self.assertEqual(response.status_code, 200)
 
     def test_tag_delete_view_uses_correct_template(self):
-        response = self.client.get(reverse("todo:tag-delete", args=[self.tag.id]))
+        response = self.client.get(
+            reverse("todo:tag-delete", args=[self.tag.id])
+        )
         self.assertTemplateUsed(response, "todo/tag_confirm_delete.html")
 
     def test_can_delete_tag(self):
-        response = self.client.post(reverse("todo:tag-delete", args=[self.tag.id]))
+        response = self.client.post(
+            reverse("todo:tag-delete", args=[self.tag.id])
+        )
         self.assertEqual(response.status_code, 302)
         self.assertFalse(Tag.objects.filter(id=self.tag.id).exists())
 
@@ -142,11 +157,14 @@ class TaskCreateViewTests(TestCase):
         self.assertTemplateUsed(response, "todo/task_form.html")
 
     def test_can_create_task(self):
-        response = self.client.post(reverse("todo:task-create"), data={
-            "content": "New Task",
-            "dead_line_time": timezone.now(),
-            "tags": [self.tag.id]
-        })
+        response = self.client.post(
+            reverse("todo:task-create"),
+            data={
+                "content": "New Task",
+                "dead_line_time": timezone.now(),
+                "tags": [self.tag.id],
+            },
+        )
         self.assertEqual(response.status_code, 302)
         self.assertTrue(Task.objects.filter(content="New Task").exists())
 
@@ -163,18 +181,25 @@ class TaskUpdateViewTests(TestCase):
         self.task = Task.objects.create(content="Task 1")
 
     def test_task_update_view_status_code(self):
-        response = self.client.get(reverse("todo:task-update", args=[self.task.id]))
+        response = self.client.get(
+            reverse("todo:task-update", args=[self.task.id])
+        )
         self.assertEqual(response.status_code, 200)
 
     def test_task_update_view_uses_correct_template(self):
-        response = self.client.get(reverse("todo:task-update", args=[self.task.id]))
+        response = self.client.get(
+            reverse("todo:task-update", args=[self.task.id])
+        )
         self.assertTemplateUsed(response, "todo/task_form.html")
 
     def test_can_update_task(self):
-        response = self.client.post(reverse("todo:task-update", args=[self.task.id]), data={
-            "content": "Updated Task",
-            "dead_line_time": timezone.now(),
-        })
+        response = self.client.post(
+            reverse("todo:task-update", args=[self.task.id]),
+            data={
+                "content": "Updated Task",
+                "dead_line_time": timezone.now(),
+            },
+        )
         self.assertEqual(response.status_code, 302)
         self.task.refresh_from_db()
         self.assertEqual(self.task.content, "Updated Task")
@@ -192,15 +217,21 @@ class TaskDeleteViewTests(TestCase):
         self.task = Task.objects.create(content="Task 1")
 
     def test_task_delete_view_status_code(self):
-        response = self.client.get(reverse("todo:task-delete", args=[self.task.id]))
+        response = self.client.get(
+            reverse("todo:task-delete", args=[self.task.id])
+        )
         self.assertEqual(response.status_code, 200)
 
     def test_task_delete_view_uses_correct_template(self):
-        response = self.client.get(reverse("todo:task-delete", args=[self.task.id]))
+        response = self.client.get(
+            reverse("todo:task-delete", args=[self.task.id])
+        )
         self.assertTemplateUsed(response, "todo/task_confirm_delete.html")
 
     def test_can_delete_task(self):
-        response = self.client.post(reverse("todo:task-delete", args=[self.task.id]))
+        response = self.client.post(
+            reverse("todo:task-delete", args=[self.task.id])
+        )
         self.assertEqual(response.status_code, 302)
         self.assertFalse(Task.objects.filter(id=self.task.id).exists())
 
@@ -217,11 +248,15 @@ class ChangeTaskStatusViewTests(TestCase):
         self.task = Task.objects.create(content="Task 1", is_done=False)
 
     def test_change_task_status(self):
-        response = self.client.get(reverse("todo:change-task-status", args=[self.task.id]))
+        response = self.client.get(
+            reverse("todo:change-task-status", args=[self.task.id])
+        )
         self.assertEqual(response.status_code, 302)
         self.task.refresh_from_db()
         self.assertTrue(self.task.is_done)
-        response = self.client.get(reverse("todo:change-task-status", args=[self.task.id]))
+        response = self.client.get(
+            reverse("todo:change-task-status", args=[self.task.id])
+        )
         self.assertEqual(response.status_code, 302)
         self.task.refresh_from_db()
         self.assertFalse(self.task.is_done)

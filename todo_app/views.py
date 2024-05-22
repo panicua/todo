@@ -1,6 +1,5 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
@@ -12,9 +11,7 @@ from todo_app.models import Tag, Task
 
 def index(request):
     """View function for the home page of the site."""
-    tasks = (
-        Task.objects.prefetch_related("tags").order_by("is_done")
-    )
+    tasks = Task.objects.prefetch_related("tags").order_by("is_done")
 
     context = {
         "task_list": tasks,
@@ -77,4 +74,3 @@ def change_task_status(request, pk):
         task.is_done = True
     task.save()
     return HttpResponseRedirect(reverse_lazy("todo:index"))
-

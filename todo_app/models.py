@@ -14,11 +14,11 @@ class Task(models.Model):
     changed_at = models.DateTimeField(auto_now=True)
     dead_line_time = models.DateTimeField(blank=True, null=True)
     is_done = models.BooleanField(default=False)
-    tags = models.ManyToManyField(Tag, blank=True, related_name='tasks')
+    tags = models.ManyToManyField(Tag, blank=True, related_name="tasks")
 
     def __str__(self):
         return self.content
 
     class Meta:
-        verbose_name = 'task'
-        verbose_name_plural = 'tasks'
+        verbose_name = "task"
+        verbose_name_plural = "tasks"
