@@ -22,4 +22,3 @@ class Task(models.Model):
     class Meta:
         verbose_name = 'task'
         verbose_name_plural = 'tasks'
-        # ordering = ['-is_done',]
