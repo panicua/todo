@@ -56,6 +56,19 @@ class TagCreateView(generic.CreateView):
     success_url = reverse_lazy("todo:tag-list")
 
 
+class TagUpdateView(generic.UpdateView):
+    model = Tag
+    form_class = TagForm
+    template_name = "todo/tag_form.html"
+    success_url = reverse_lazy("todo:tag-list")
+
+
+class TagDeleteView(generic.DeleteView):
+    model = Tag
+    template_name = "todo/tag_confirm_delete.html"
+    success_url = reverse_lazy("todo:tag-list")
+
+
 class TaskCreateView(generic.CreateView):
     model = Task
     form_class = TaskForm
@@ -84,3 +97,4 @@ def change_task_status(request, pk):
         task.is_done = True
     task.save()
     return HttpResponseRedirect(reverse_lazy("todo:index"))
+
