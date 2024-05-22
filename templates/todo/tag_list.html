@@ -1,0 +1,26 @@
+{% extends "_base.html" %}
+
+{% block content %}
+  <h1>
+    List of Tags
+    <a href="#" class="btn btn-primary link-to-page">
+      Create
+    </a>
+  </h1>
+{#  <form style="margin-bottom: 10px" action="" method="get" class="form-inline">#}
+{#    {{ search_form|crispy }}#}
+{#    <input style="margin-left: 10px" type="submit" value="Search" class="btn btn-primary">#}
+{#  </form>#}
+  {% if tag_list %}
+    <ul>
+      {% for tag in tag_list %}
+        <li>
+          <a href="{% url "todo:tag-detail" pk=tag.id %} ">{{ tag.id }}</a>
+          {{ tag.name }}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>There are no existing tags</p>
+  {% endif %}
+{% endblock %}
