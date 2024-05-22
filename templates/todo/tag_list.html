@@ -1,4 +1,6 @@
 {% extends "_base.html" %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
 
 {% block content %}
   <h1>
@@ -8,12 +10,24 @@
     </a>
   </h1>
   {% if tag_list %}
-    <ul>
+    <table class="table purple-table-border">
+      <thead class="purple-table-head">
+      <tr>
+        <th class="purple-50" scope="col">Tag name</th>
+        <th class="purple-25" scope="col">Update</th>
+        <th class="purple-25" scope="col">Delete</th>
+      </tr>
+      </thead>
+      <tbody>
       {% for tag in tag_list %}
-        <li>{{ tag.name }}</li>
+        <tr>
+        <td>{{ tag.name }}</td>
+        <td><a href="#" class="btn btn-blog-purple">Update</a></td>
+        <td><a href="#" class="btn btn-blog-purple">Delete</a></td>
       {% endfor %}
-    </ul>
+      </tbody>
+    </table>
   {% else %}
-    <p>There are no existing tags</p>
+    No comments yet.
   {% endif %}
 {% endblock %}
