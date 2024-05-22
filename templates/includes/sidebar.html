@@ -1,25 +1,16 @@
-<ul class="sidebar-nav list-group">
-  <li>
-    <a
-        style="text-decoration: none;
-        font-size: 24px"
-        href="{% url 'todo:index' %}">Home
-    </a>
-  </li>
-  <li>
-    <a
-        style="text-decoration: none;
-        font-size: 24px"
-        href="{% url "todo:tag-list" %}">Tags
-    </a>
-  </li>
-</ul>
-<br>
-<br>
-<br>
-{% if user.is_authenticated %}
-  <p>{{ user.username }}</p>
-  <a href="{% url 'logout' %}">Logout</a>
-{% else %}
-  <a href="{% url 'login' %}">Login</a>
-{% endif %}
+<div class="list-group">
+  <a href="{% url 'todo:index' %}" class="list-group-item list-group-item-action">
+    Home
+  </a>
+  <a href="{% url 'todo:tag-list' %}" class="list-group-item list-group-item-action">
+    Tags
+  </a>
+</div>
+<div class="mt-4">
+  {% if user.is_authenticated %}
+    <p>{{ user.username }}</p>
+    <a href="{% url 'logout' %}" class="btn btn-outline-secondary">Logout</a>
+  {% else %}
+    <a href="{% url 'login' %}" class="btn btn-outline-primary">Login</a>
+  {% endif %}
+</div>

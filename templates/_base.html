@@ -13,25 +13,20 @@
 <body>
 <div class="container-fluid">
   <div class="row">
-    <div class="col-sm-1">
-
-      {% block sidebar %}
-        {% include "includes/sidebar.html" %}
-      {% endblock %}
-
-    </div>
-    <div class="col-sm-10">
-
-      {% block content %}{% endblock %}
-
-      {% block pagination %}{% endblock %}
-
-      <div class="col-sm-1">
-
-        {% block adds %}
+    <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+      <div class="position-sticky pt-3">
+        {% block sidebar %}
+          {% include "includes/sidebar.html" %}
         {% endblock %}
       </div>
-    </div>
+    </nav>
+
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      <div class="pt-3 pb-2 mb-3 border-bottom">
+        {% block content %}{% endblock %}
+      </div>
+      {% block pagination %}{% endblock %}
+    </main>
   </div>
 </div>
 </body>

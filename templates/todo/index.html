@@ -1,53 +1,34 @@
 {% extends '_base.html' %}
 
-{#{% block pagination %}#}
-{#  {% include "includes/index_pagination.html" %}#}
-{#{% endblock %}#}
-
 {% block content %}
-  <h2>Task List
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Task List</h2>
     {% if user.is_authenticated %}
-    <a href="{% url 'todo:task-create' %}"
-       class="btn btn-primary link-to-page"
-       style="margin-left:20px">
-      Create Task
-    </a>
+    <a href="{% url 'todo:task-create' %}" class="btn btn-primary">Create Task</a>
     {% endif %}
-  </h2>
+  </div>
 
-
-  {#  <h4>Page number: {{ post_list.number }}</h4>#}
   {% if task_list %}
-    <ul>
+    <div class="list-group">
       {% for task in task_list %}
-        <li class="purple-table-border purple-table-head"
-            style="border-radius: 6px">
-          <p><strong>Content: </strong>{{ task.content }}</p>
-          <p><strong>Created at: </strong>{{ task.created_at }}</p>
-          <p><strong>Changed at: </strong>{{ task.changed_at }}</p>
-          <p><strong>Deadline: </strong>{{ task.dead_line_time }}</p>
-          <p>
-            <strong>Status done: </strong>{{ task.is_done }}
-            {% include "includes/task_status_change.html" %}
-          </p>
-          <p><strong>Tags: </strong>
-            {% for tag in task.tags.all %}{{ tag.name }},{% endfor %}
-          </p>
+        <div class="list-group-item list-group-item-action mb-3 rounded shadow-sm">
+          <h5 class="mb-1">{{ task.content }}</h5>
+          <p class="mb-1"><strong>Created at: </strong>{{ task.created_at }}</p>
+          <p class="mb-1"><strong>Changed at: </strong>{{ task.changed_at }}</p>
+          <p class="mb-1"><strong>Deadline: </strong>{{ task.dead_line_time }}</p>
+          <p class="mb-1"><strong>Status done: </strong>{{ task.is_done }}</p>
+          <p class="mb-1"><strong>Tags: </strong>{% for tag in task.tags.all %}{{ tag.name }},{% endfor %}</p>
+          {% include "includes/task_status_change.html" %}
           {% if user.is_authenticated %}
-            <a href="{% url 'todo:task-delete' pk=task.pk %}"
-               class="btn btn-danger link-to-page">
-              Delete
-            </a>
-            <a href="{% url 'todo:task-update' pk=task.pk %}"
-               class="btn btn-primary link-to-page">
-              Update
-            </a>
+            <div class="mt-2">
+              <a href="{% url 'todo:task-delete' pk=task.pk %}" class="btn btn-danger me-2">Delete</a>
+              <a href="{% url 'todo:task-update' pk=task.pk %}" class="btn btn-primary">Update</a>
+            </div>
           {% endif %}
-        </li>
-        <br>
+        </div>
       {% endfor %}
-    </ul>
+    </div>
   {% else %}
-    <p>NO TASKS YET.</p>
+    <p>No tasks yet.</p>
   {% endif %}
 {% endblock %}
