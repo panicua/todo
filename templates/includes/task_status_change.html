@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 
 {% if task.is_done %}
-  <a href="{% url 'todo:change-task-status' pk=task.pk %}" class="btn btn-blog-purple">Undo</a>
+  <a href="{% url 'todo:change-task-status' pk=task.pk %}" class="btn btn-purple">Undo</a>
 {% else %}
   <a href="{% url 'todo:change-task-status' pk=task.pk %}" class="btn btn-success link-to-page">Complete</a>
 {% endif %}
