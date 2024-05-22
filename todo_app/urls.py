@@ -17,11 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from todo_app.views import index, TagListView
+from todo_app.views import index, TagListView, TagCreateView
 
 urlpatterns = [
     path("", index, name="index"),
     path("tags", TagListView.as_view(), name="tag-list"),
+    path("tags/create/", TagCreateView.as_view(), name="tag-create"),
 ]
 
 app_name = "todo"
