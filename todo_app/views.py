@@ -1,13 +1,31 @@
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 
-from todo_app.forms import TagForm
-from todo_app.models import Tag
+from todo_app.forms import TagForm, TaskForm
+from todo_app.models import Tag, Task
 
 
 def index(request):
-    context = {}
+    """View function for the home page of the site."""
+    tasks = (
+        Task.objects.prefetch_related("tags").order_by("-is_done")
+    )
+
+    # paginator = Paginator(tasks, 5)
+    # page_number = request.GET.get("page")
+    #
+    # try:
+    #     posts = paginator.page(page_number)
+    # except PageNotAnInteger:
+    #     posts = paginator.page(1)
+    # except EmptyPage:
+    #     posts = paginator.page(paginator.num_pages)
+
+    context = {
+        "task_list": tasks,
+    }
     return render(request, "todo/index.html", context=context)
 
 
@@ -35,3 +53,10 @@ class TagCreateView(generic.CreateView):
     form_class = TagForm
     template_name = "todo/tag_form.html"
     success_url = reverse_lazy("todo:tag-list")
+
+
+class TaskCreateView(generic.CreateView):
+    model = Task
+    form_class = TaskForm
+    template_name = "todo/task_form.html"
+    success_url = reverse_lazy("todo:index")
