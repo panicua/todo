@@ -5,10 +5,15 @@
 {#{% endblock %}#}
 
 {% block content %}
-  <h2>Task List<a href="{% url 'todo:task-create' %}"
-                  class="btn btn-primary link-to-page" style="margin-left:20px">
-    Create Task
-  </a></h2>
+  <h2>Task List
+    {% if user.is_authenticated %}
+    <a href="{% url 'todo:task-create' %}"
+       class="btn btn-primary link-to-page"
+       style="margin-left:20px">
+      Create Task
+    </a>
+    {% endif %}
+  </h2>
 
 
   {#  <h4>Page number: {{ post_list.number }}</h4>#}
@@ -25,15 +30,18 @@
             {% include "includes/task_status_change.html" %}
           </p>
           <p><strong>Tags: </strong>
-            {% for tag in task.tags.all %}{{ tag.name }},{% endfor %}</p>
-          <a href="{% url 'todo:task-delete' pk=task.pk %}"
-             class="btn btn-danger link-to-page">
-            Delete
-          </a>
-          <a href="{% url 'todo:task-update' pk=task.pk %}"
-             class="btn btn-primary link-to-page">
-            Update
-          </a>
+            {% for tag in task.tags.all %}{{ tag.name }},{% endfor %}
+          </p>
+          {% if user.is_authenticated %}
+            <a href="{% url 'todo:task-delete' pk=task.pk %}"
+               class="btn btn-danger link-to-page">
+              Delete
+            </a>
+            <a href="{% url 'todo:task-update' pk=task.pk %}"
+               class="btn btn-primary link-to-page">
+              Update
+            </a>
+          {% endif %}
         </li>
         <br>
       {% endfor %}
