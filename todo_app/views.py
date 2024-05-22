@@ -1,6 +1,8 @@
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.views import generic
 
+from todo_app.forms import TagForm
 from todo_app.models import Tag
 
 
@@ -26,3 +28,10 @@ class TagListView(generic.ListView):
     #     if form.is_valid():
     #         return queryset.filter(name__icontains=form.cleaned_data["name"])
     #     return queryset
+
+
+class TagCreateView(generic.CreateView):
+    model = Tag
+    form_class = TagForm
+    template_name = "todo/tag_form.html"
+    success_url = reverse_lazy("todo:tag-list")
