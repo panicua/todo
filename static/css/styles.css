@@ -1,0 +1,38 @@
+.btn-purple {
+    color: #212121;
+    background-color: #e0cffc;
+    border-color: #3d0a91;
+}
+
+.btn-purple:hover {
+    color: #fff;
+    background-color: #a370f7;
+    border-color: #3d0a91;
+}
+
+.purple-table-head {
+    color: #212121;
+    background-color: #e0cffc;
+}
+
+.purple-table-border {
+    border: 1px solid #3d0a91;
+}
+
+
+.top-bottom-20 {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.purple-50 {
+  width: 50%;
+}
+
+.purple-25 {
+  width: 25%;
+}
+
+.purple-25 {
+  width: 25%;
+}

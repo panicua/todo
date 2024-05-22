@@ -1,0 +1,12 @@
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% load static %}
+
+{% if user.is_authenticated %}
+  {% if task.is_done %}
+    <a href="{% url 'todo:change-task-status' pk=task.pk %}" class="btn btn-secondary mt-2">Undo</a>
+  {% else %}
+    <a href="{% url 'todo:change-task-status' pk=task.pk %}" class="btn btn-success mt-2">Complete</a>
+  {% endif %}
+{% endif %}
