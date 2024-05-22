@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 from todo_app.views import index, TagListView, TagCreateView, TaskCreateView, \
-    TaskDeleteView
+    TaskDeleteView, TaskUpdateView
 
 urlpatterns = [
     path("", index, name="index"),
@@ -26,8 +26,7 @@ urlpatterns = [
     path("tags/create/", TagCreateView.as_view(), name="tag-create"),
     path("task/create/", TaskCreateView.as_view(), name="task-create"),
     path("task/delete/<int:pk>/", TaskDeleteView.as_view(), name="task-delete"),
-    # path("task/update/<int:pk>/", TaskUpdateView.as_view(), name="task-update"),
-    # path("admin/", admin.site.urls),
+    path("task/update/<int:pk>/", TaskUpdateView.as_view(), name="task-update"),
 ]
 
 app_name = "todo"
